@@ -20,7 +20,7 @@ You should receive some testnet matic tokens after a minute.
 
 First, clone this repository to your local environment. 
 
-Before starting, we must install the Cere Freeport SDK along with some other dependencies in our project. In a terminal, navigate to the `starter-files` folder and run the following command:
+Before starting, we must install the Cere Freeport SDK along with some other dependencies in our project. In a terminal, navigate to this folder and run the following command:
     
     npm install ethers axios @cerefreeport-sdk
 
