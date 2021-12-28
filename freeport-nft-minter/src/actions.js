@@ -75,7 +75,8 @@ export const upload2DDC = async (data, title, description) => {
 
     let fdata = new FormData();
     fdata.append('minter', minter); 
-    fdata.append('file', new File( utilStr2ByteArr(data), "my-ddc-file.txt", {type: "text/plain"})); 
+    //fdata.append('file', new File( utilStr2ByteArr(data), "my-ddc-file.txt", {type: "text/plain"})); 
+    fdata.append('file', new File( [data], "my-ddc-file.txt", {type: "text/plain"})); 
     fdata.append('signature', signature); 
     fdata.append('minterEncryptionKey', minterEncryptionKey); 
     fdata.append('description', description); 
@@ -88,6 +89,7 @@ export const upload2DDC = async (data, title, description) => {
     while (!contentId) {
       counter ++;
       let httpGetResponse = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${uploadId}`);
+      console.log(httpGetResponse);
       contentId = httpGetResponse.data.result;
       if (contentId){
         return {contentId: contentId, status: `Uploaded. The content ID of your DDC upload is: ${contentId}`};
@@ -110,7 +112,8 @@ export const downloadFromDDC = async (contentId) => {
   const signer = provider.getSigner();
   await sleepX(1);
   const signature = await signer.signMessage(`Confirm identity:\nMinter: ${minter}\nCID: ${contentId}\nAddress: ${minter}`); 
-  const results = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${minter}/${contentId}/content`, { headers: { 'X-DDC-Signature': signature }});
+  //const results = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${minter}/${contentId}/content`, { headers: { 'X-DDC-Signature': signature }});
+  const results = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${minter}/${contentId}/content`, { headers: { 'X-DDC-Signature': signature, 'X-DDC-Address': minter }});
   console.log(results);
   return results.data;
 };

@@ -62,6 +62,7 @@ const Main = (props) => {
 
   return (   
     <div className="Main">
+      <br></br>
       <button id="walletButton" onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
           "Connected: " + String(walletAddress).substring(0, 6) + "..." + String(walletAddress).substring(38)
@@ -71,7 +72,11 @@ const Main = (props) => {
       </button>
       <br></br>
       <h1 id="title"> Create an NFT with Cere Freeport and DDC </h1>
+
+      <div class="header">
+        <h3>Status message:</h3>
       <p id="status"> {status} </p>
+      </div>
 
       <br></br>
       <h2> Upload content to DDC </h2>

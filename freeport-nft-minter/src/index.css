@@ -18,10 +18,12 @@ code {
   max-width: 80vh;
   max-height: 80vh;
   padding: 60px 100px;
+  /* padding:0; */
   margin: 0 auto;
   text-align: left;
 
 }
+
 
 input {
   border-top-style: hidden;
@@ -63,8 +65,8 @@ button {
 }
 
 #status {
-  color: #B72193;
-  font-size: 18px;
+  color: #FFFFFF;
+  font-size: 16px;
 }
 
 .uploadFile {
@@ -88,4 +90,13 @@ button {
   background-color: #B72193;
   border-color: #B72193;
   color:white;
+}
+
+.header {
+  padding: 5px;
+  text-align: center;
+  background: #B72193;
+  color: white;
+  font-size: 20px;
+  /* border-radius: 150px; */
 }
