@@ -42,7 +42,7 @@ First, go to the Freeport NFT-minter GitHub repository and clone this repository
 
 Before starting, we must install the Cere Freeport SDK along with some other dependencies in our project. In a terminal, navigate to the `starter-files` folder and run the following command:
     
-    npm install -S ethers axios @cerefreeport-sdk
+    npm install -S ethers axios @cere/freeport-sdk
 
 Once these have finished installing, run the following command in the `starter-files` directory
     
