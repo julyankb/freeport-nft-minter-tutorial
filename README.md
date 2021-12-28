@@ -12,7 +12,7 @@ Here's what your final product will look like.
 # The process of minting an NFT
 The process of minting NFTs generally involves 3 steps:
 
-1. An ERC-721 or ERC-1155 smart contract must be published on the blockchain.
+1. An ERC-1155 smart contract must be published on the blockchain.
 2. A minting function within the smart contract is called and creates a unique instance of your NFT on the blockchain. Minting functions generally require two inputs: a `recipient` (the wallet to receive this NFT) and a `tokenURI` (a string that points to a JSON containing the metadata of the NFT).
 3. The asset that the NFT respresents must be uploaded and stored somewhere. Preferably in a decentralized fashion. 
 
@@ -42,7 +42,7 @@ First, go to the Freeport NFT-minter GitHub repository and clone this repository
 
 Before starting, we must install the Cere Freeport SDK along with some other dependencies in our project. In a terminal, navigate to the `starter-files` folder and run the following command:
     
-    npm install ethers axios @cerefreeport-sdk
+    npm install -S ethers axios @cerefreeport-sdk
 
 Once these have finished installing, run the following command in the `starter-files` directory
     
@@ -50,7 +50,7 @@ Once these have finished installing, run the following command in the `starter-f
 
 If a browser does not open automatically, open one and navigate to [http://localhost:3000/](http://localhost:3000/). Here you'll see the frontend of your project. These are the functionalities that you will be implementing.
 
-# The files you'll be working on
+ # The files you'll be working on
 
 Open the following two files:
 
@@ -58,7 +58,8 @@ Open the following two files:
 1. `src/actions.js`: this file contains the functions we need for interacting with our Metamask wallet, the Freeport smart contract and the DDC.
 2. `src/Main.js`: this file contains the user inferface and the functions required to tie the two files together.
 
-Let's break these down.  
+Now let's start coding! Each code block below is preceeded by a header representing the function you're editing and its corresponding file name in [brackets]. 
+<!-- Let's break these down.  
 
 ## `1. actions.js`
 ### a. Imports
@@ -200,6 +201,7 @@ return (
   </div>
 );
 ```
+ -->
 
 
 
