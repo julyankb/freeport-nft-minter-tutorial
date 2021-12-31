@@ -14,6 +14,10 @@ export const utilStr2ByteArr = (str) => {
     return arr;
 }
 
+
+
+
+
 // Connecting wallet 
 export const connectWallet = async () => {
   if (window.ethereum) {
@@ -64,6 +68,7 @@ export const mintNFT = async (quantity, metadata) => {
 };
 
 export const upload2DDC = async (data, title, description) => {
+    debugger
     const accounts = await window.ethereum.request({ method: "eth_accounts" });
     const minter = accounts[0]
     const minterEncryptionKey = await window.ethereum.request({ method: 'eth_getEncryptionPublicKey', params: [minter] });
@@ -76,20 +81,24 @@ export const upload2DDC = async (data, title, description) => {
     let fdata = new FormData();
     fdata.append('minter', minter); 
     //fdata.append('file', new File( utilStr2ByteArr(data), "my-ddc-file.txt", {type: "text/plain"})); 
-    fdata.append('file', new File( [data], "my-ddc-file.txt", {type: "text/plain"})); 
+    //fdata.append('file', new File( [data], "my-ddc-file.txt", {type: "text/plain"})); 
+    //fdata.append('file', new File( [data], "my-ddc-file.txt")); 
+    //console.log(data)
+    // fdata.append('file', new File( [data], data)); 
+    fdata.append('file', data); 
     fdata.append('signature', signature); 
     fdata.append('minterEncryptionKey', minterEncryptionKey); 
     fdata.append('description', description); 
     fdata.append('title', title); 
 
-    const httpPostResponse = await httpPost("https://ddc.freeport.dev.cere.network/assets/v1", fdata, { headers: {'Content-Type': 'multipart/form-data'} });
+    const httpPostResponse = await httpPost("https://ddc.freeport.stg.cere.network/assets/v1", fdata, { headers: {'Content-Type': 'multipart/form-data'} });
     const uploadId = httpPostResponse.data.id
     let contentId = null;
     var counter = 0;
     while (!contentId) {
       counter ++;
-      let httpGetResponse = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${uploadId}`);
-      console.log(httpGetResponse);
+      let httpGetResponse = await httpGet(`https://ddc.freeport.stg.cere.network/assets/v1/${uploadId}`);
+      //console.log(httpGetResponse);
       contentId = httpGetResponse.data.result;
       if (contentId){
         return {contentId: contentId, status: `Uploaded. The content ID of your DDC upload is: ${contentId}`};
@@ -113,7 +122,12 @@ export const downloadFromDDC = async (contentId) => {
   await sleepX(1);
   const signature = await signer.signMessage(`Confirm identity:\nMinter: ${minter}\nCID: ${contentId}\nAddress: ${minter}`); 
   //const results = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${minter}/${contentId}/content`, { headers: { 'X-DDC-Signature': signature }});
-  const results = await httpGet(`https://ddc.freeport.dev.cere.network/assets/v1/${minter}/${contentId}/content`, { headers: { 'X-DDC-Signature': signature, 'X-DDC-Address': minter }});
-  console.log(results);
-  return results.data;
+  const results = await httpGet(`https://ddc.freeport.stg.cere.network/assets/v1/${minter}/${contentId}/content`, { headers: { 'X-DDC-Signature': signature, 'X-DDC-Address': minter }});
+  //console.log(new File([results.data], 'filename.txt'));
+  //debugger
+  console.log(results.data)
+  console.log(results.data.length);
+  //return results.data;
+
+  return new File([results.data], 'filename.png', {type: "image/png"});
 };
