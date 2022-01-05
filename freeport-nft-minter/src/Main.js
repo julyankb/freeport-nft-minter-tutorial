@@ -43,7 +43,7 @@ const Main = (props) => {
   const connectWalletPressed = async () => {
     // Call our connectWallet function from the previous step and await response.
     const { status, address } = await connectWallet();
-    setStatus(setStatus);
+    setStatus(status);
     setWalletAddress(address);
   };
 

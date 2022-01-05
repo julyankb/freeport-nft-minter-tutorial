@@ -1,61 +1,98 @@
 import { React, useEffect, useState } from "react";
-import { connectWallet, getCurrentWalletConnected, mintNFT, upload2DDC, downloadFromDDC } from "./actions.js";
+import { connectWallet, getCurrentWalletConnected, mintNFT, upload2DDC, downloadFromDDC, attachNftToCid } from "./actions.js";
 
 const Main = (props) => {
 
-  //State variables
-  const [status, setStatus] = useState("");
+  // State variables - Connecting wallet
   const [walletAddress, setWalletAddress] = useState("");
-  const [metadata, setMetadata] = useState("");
-  const [cid, setCid] = useState(null);
-  const [qty, setQty] = useState(null);
-	const [uploadData, setUploadData] = useState("");
+  // State variables - Upload content
+	const [uploadData, setUploadData] = useState(null);
   const [uploadDataTitle, setUploadDataTitle] = useState("")
   const [uploadDataDescription, setUploadDataDescription] = useState("")
-  // For ddc download
-  const [content, setContent] = useState(null);
+  const [cid, setCid] = useState(null);
+  // State variables - Download content
+  const [preview, setPreview] = useState(null);
+  const [downloadedImage, setDownloadedImage] = useState(null);
+  // State variables - Mint NFT
+  const [metadata, setMetadata] = useState("");
+  const [qty, setQty] = useState(1);
+  const [nftId, setNftId] = useState(null);
+  // State variables - Statuses
+  const [status, setStatus] = useState("");
+  const [uploadOutput, setUploadOutput] = useState("Content ID:");
+  const [mintOutput, setMintOutput] = useState("NFT ID:");
+  const [attachOutput, setAttachOutput] = useState("Attachment transaction link:");
+
 
   function addWalletListener() {
-    // TO DO
+    // TO DO 
+  };
+
+  const connectWalletPressed = async () => {
+    // TO DO 
   };
 
   useEffect(async () => {
-    // TO DO
+    // TO DO 
   }, []);
 
-  const connectWalletPressed = async () => {
-    // TO DO
-  };
-
-  // Functions to fill out
-  const onMintPressed = async () => {
-    // TO DO
-  };
-
   const onUploadPressed = async () => {
-    // TO DO
+    // TO DO 
   }
 
   const onDownloadPressed = async () => {
     // TO DO
-  }
+  };
+
+  const onMintPressed = async () => {
+    // TO DO
+  };
+
+
+  const onAttachPressed = async () => {
+    // TO DO
+  };
+
+  const onClearOutputPressed = async () => {
+    setStatus("Follow the steps below.");
+    setUploadData(null);
+    setPreview(null);
+    setUploadOutput("Content ID:")
+    setMintOutput("NFT ID:")
+    setAttachOutput("Attachment transaction link:")
+  };
 
   return (   
     <div className="Main">
+      <br></br>
       <button id="walletButton" onClick={connectWalletPressed}>
-        {walletAddress.length > 0 ? (
-          "Connected: " + String(walletAddress).substring(0, 6) + "..." + String(walletAddress).substring(38)
-        ) : (
-          <span>Connect Wallet</span>
-        )}
+        {walletAddress.length > 0 ? ("Connected: " + String(walletAddress).substring(0, 6) + "..." + String(walletAddress).substring(38)) : (<span>Connect Wallet</span>)}
       </button>
       <br></br>
       <h1 id="title"> Create an NFT with Cere Freeport and DDC </h1>
-      <p id="status"> {status} </p>
 
+      <div class="header">
+        <h3>Status message:</h3>
+      <p id="status"> {status} </p>
+      </div>
+
+      <div class="header2">
+        <h3>Outputs:</h3>
+      <p id="output"> {uploadOutput} </p>
+      <p id="output"> Downloaded image: </p>
+      {downloadedImage ? <img src={downloadedImage} style={{width: "200px"}}></img>: null}
+      <p id="output"> {mintOutput} </p>
+      <p id="output"> {attachOutput} </p>
+      </div>
+      <button id="actionButton" onClick={onClearOutputPressed}>Clear output</button>      
+      
+      <br></br><br></br><br></br>
+      <h2> Upload your content to DDC </h2>
+      {<img src={preview} style={{width: "200px"}}></img>}
       <br></br>
-      <h2> Upload content to DDC </h2>
-      <input type="text" placeholder="Enter content to upload to DDC. (e.g., a random string)" onChange={(event) => setUploadData(event.target.value)}/>
+      <form class="form" id="myform">
+      <input type="file" id="inpFile" onChange={(event) => { setUploadData(event.target.files[0]); setPreview(URL.createObjectURL(event.target.files[0])); }}></input>
+      </form>
       &nbsp;
       <input type="text" placeholder="Give your content a title." onChange={(event) => setUploadDataTitle(event.target.value)}/>
       &nbsp;
@@ -64,18 +101,25 @@ const Main = (props) => {
 
       <br></br><br></br>
       &nbsp;
-      <h2> Now download that content from DDC </h2>
+      <h2> Verify that your content was uploaded by downloading it from DDC </h2>
       <input type="text" placeholder="Enter content ID returned from upload step." onChange={(event) => setCid(event.target.value)}/>
       <button id="actionButton" onClick={onDownloadPressed}> Download </button>      
 
-
       <br></br><br></br>
       &nbsp;
-      <h2> Mint an NFT with Freeport </h2>
+      <h2> Mint NFT(s) with the Freeport Smart Contract </h2>
       <input type="text" placeholder="Enter some token metadata." onChange={(event) => setMetadata(event.target.value)}/>
       &nbsp;
       <input type="number" placeholder="Enter the number of copies to mint." value={qty} onChange={(event) => setQty(event.target.value)}/>
       <button id="actionButton" onClick={onMintPressed}> Mint NFT</button>      
+
+      <br></br><br></br>
+      <h2> Attach NFT to CID </h2>
+      <input type="text" placeholder="Enter your NFT id." onChange={(event) => setNftId(event.target.value)}/>
+      &nbsp;
+      <input type="text" placeholder="Enter your content id." onChange={(event) => setCid(event.target.value)}/>
+      <button id="actionButton" onClick={onAttachPressed}> Attach</button>      
+      <br></br><br></br><br></br><br></br>
     </div>
   );
 };

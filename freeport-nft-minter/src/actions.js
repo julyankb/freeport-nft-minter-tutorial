@@ -147,7 +147,7 @@ export const attachNftToCid = async (nftId, cid) => {
     return { success: true, status: "NFT and CID attached.", tx: tx.hash };
     // If something goes wrong, catch that error. 
   } catch (error) { return { success: false, status: "Something went wrong: " + error.message }; }
-}
+};
 
 // Helper functions
 const sleepFor = async (x) => new Promise((resolve, _) => {
