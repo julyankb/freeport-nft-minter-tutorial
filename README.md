@@ -153,50 +153,50 @@ useEffect(async () => {
 This is where we start using Cere Freeport. 
 ```javascript
 export const upload2DDC = async (data, title, description) => {
-    // Get the wallets that are connected to metamask
-    const accounts = await window.ethereum.request({ method: "eth_accounts" });
-    // Get the user's wallet address
-    const minter = accounts[0]
-    // Here we request that the user shares their public encryption key.
-    const minterEncryptionKey = await window.ethereum.request({ method: 'eth_getEncryptionPublicKey', params: [minter] });
-    // Create a new provider, which is an abstraction of a connection to the Ethereum network
-    const provider = importProvider()
-    // Get the user's account. A 'signer' is an abstraction of an Ethereum account.
-    const signer = provider.getSigner();
-    // Wait one second.
-    await sleepFor(1);
-    // Create the signature 
-    const signature = await signer.signMessage(`Confirm asset upload\nTitle: ${title}\nDescription: ${description}\nAddress: ${minter}`); 
-    // Construct a set of key/value pairs representing the fields required by the Cere DDC API. 
-    let fdata = new FormData();
-    fdata.append('minter', minter); 
-    fdata.append('file', data); 
-    fdata.append('signature', signature); 
-    fdata.append('minterEncryptionKey', minterEncryptionKey); 
-    fdata.append('description', description); 
-    fdata.append('title', title); 
-    // Make an HTTP post request to the Cere DDC API using the FormData object we defined above.
-    const httpPostResponse = await httpPost("https://ddc.freeport.stg.cere.network/assets/v1", fdata, { headers: {'Content-Type': 'multipart/form-data'} });
-    // This post request contains a string corresponding to the uploadId of your upload request.
-    const uploadId = httpPostResponse.data.id
-    // With this uploadId, we make a get request to the Cere DDC API to get the contentId of our upload. 
-    // This content will not exist until the upload is complete.
-    // We repeat this request until the file is uploaded or the upload fails (max 3 attempts)
-    let contentId = null;
-    var attempts = 1;
-    while (!contentId) {
-      attempts ++;
-      let httpGetResponse = await httpGet(`https://ddc.freeport.stg.cere.network/assets/v1/${uploadId}`);
-      contentId = httpGetResponse.data.result;
-      // When the contentId is no longer null, the upload is considered successful. Return the contentId of this upload.
-      if (contentId){ return {contentId: contentId, status: "Upload successful."}; }
-      // If HTTP get request fails, then the upload was not successful. Return an empty string.
-      if (httpGetResponse.failed) { return { contentId: "", status: "DDC upload failed" }; }
-      // If this while loop unsucessfully makes 3 attempts at receiving a non-null contentId, give up and return an empty string. 
-      if (attempts == 3){ return { contentId: "", status: "Unable to get upload status after 3 attempts" }; }
-      // Wait 10 seconds before trying again.
-      await sleepFor(10);
-    }
+  // Get the wallets that are connected to metamask
+  const accounts = await window.ethereum.request({ method: "eth_accounts" });
+  // Get the user's wallet address
+  const minter = accounts[0]
+  // Here we request that the user shares their public encryption key.
+  const minterEncryptionKey = await window.ethereum.request({ method: 'eth_getEncryptionPublicKey', params: [minter] });
+  // Create a new provider, which is an abstraction of a connection to the Ethereum network
+  const provider = importProvider()
+  // Get the user's account. A 'signer' is an abstraction of an Ethereum account.
+  const signer = provider.getSigner();
+  // Wait one second.
+  await sleepFor(1);
+  // Create the signature 
+  const signature = await signer.signMessage(`Confirm asset upload\nTitle: ${title}\nDescription: ${description}\nAddress: ${minter}`); 
+  // Construct a set of key/value pairs representing the fields required by the Cere DDC API. 
+  let fdata = new FormData();
+  fdata.append('minter', minter); 
+  fdata.append('file', data); 
+  fdata.append('signature', signature); 
+  fdata.append('minterEncryptionKey', minterEncryptionKey); 
+  fdata.append('description', description); 
+  fdata.append('title', title); 
+  // Make an HTTP post request to the Cere DDC API using the FormData object we defined above.
+  const httpPostResponse = await httpPost("https://ddc.freeport.stg.cere.network/assets/v1", fdata, { headers: {'Content-Type': 'multipart/form-data'} });
+  // This post request contains a string corresponding to the uploadId of your upload request.
+  const uploadId = httpPostResponse.data.id
+  // With this uploadId, we make a get request to the Cere DDC API to get the contentId of our upload. 
+  // This content will not exist until the upload is complete.
+  // We repeat this request until the file is uploaded or the upload fails (max 3 attempts)
+  let contentId = null;
+  var attempts = 1;
+  while (!contentId) {
+    attempts ++;
+    let httpGetResponse = await httpGet(`https://ddc.freeport.stg.cere.network/assets/v1/${uploadId}`);
+    contentId = httpGetResponse.data.result;
+    // When the contentId is no longer null, the upload is considered successful. Return the contentId of this upload.
+    if (contentId){ return {contentId: contentId, status: "Upload successful."}; }
+    // If HTTP get request fails, then the upload was not successful. Return an empty string.
+    if (httpGetResponse.failed) { return { contentId: "", status: "DDC upload failed" }; }
+    // If this while loop unsucessfully makes 3 attempts at receiving a non-null contentId, give up and return an empty string. 
+    if (attempts == 3){ return { contentId: "", status: "Unable to get upload status after 3 attempts" }; }
+    // Wait 10 seconds before trying again.
+    await sleepFor(10);
+  }
 };
 ```
 
