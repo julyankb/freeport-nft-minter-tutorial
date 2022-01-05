@@ -6,9 +6,9 @@ In this tutorial, you'll learn how to connect a React frontend to Cere Freeport'
 * Locate and download this asset from Cere's DDC.
 * Attach this asset to your NFT. 
 
-<!-- Here's what your final product will look like. 
+Here's what your final product will look like. 
 
-<img src="./preview.png" width="700"> -->
+<img src="./preview.png" width="700"> 
 
 # The process of minting an NFT
 The process of minting NFTs generally involves 3 steps:
