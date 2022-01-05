@@ -37,7 +37,7 @@ You should receive some testnet matic tokens after a minute.
 
 ## Installing dependencies and starting your project
 
-First, go to the Freeport NFT-minter GitHub repository and clone this repository to your local environment. This repository contains two folders:
+First, clone this repository to your local environment. It contains two folders:
 * `starter-files`: contains the starter files which include the React UI and the code to connect to Metamask. These are the files we'll be editing in this tutorial. 
 * `freeport-nft-minter`: contains the completed tutorial.
 
