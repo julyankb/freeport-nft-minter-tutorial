@@ -25,15 +25,35 @@ const Main = (props) => {
 
 
   function addWalletListener() {
-    // TO DO 
+    // Check if metamask is installed 
+    if (window.ethereum) {
+        // Listen for state changes in the metamask wallet such as:
+        window.ethereum.on("accountsChanged", (accounts) => {
+          // If there is at least one account, update the state variables 'walletAddress' and 'status'
+          if (accounts.length > 0) {
+            setWalletAddress(accounts[0]);
+            setStatus("Follow the steps below.");
+          // If metamask is installed but there are no accounts, then it must not be connected.
+          } else { setStatus("Connect to Metamask using the top right button."); }
+        });
+      // If metamask is not installed, then ask them to install it. 
+    } else { setStatus("Please install metamask and come back"); }
   };
 
   const connectWalletPressed = async () => {
-    // TO DO 
+    // Call our connectWallet function from the previous step and await response.
+    const { status, address } = await connectWallet();
+    setStatus(status);
+    setWalletAddress(address);
   };
 
   useEffect(async () => {
-    // TO DO 
+    // The 'callback' side-effect logic
+    const {address, status} = await getCurrentWalletConnected();
+    setWalletAddress(address)
+    setStatus(status); 
+    addWalletListener();
+    // The 'dependencies' array
   }, []);
 
   const onUploadPressed = async () => {

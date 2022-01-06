@@ -159,7 +159,7 @@ useEffect(async () => {
 # Uploading your asset to DDC
 
 ## `1. upload2DDC [actions.js]`
-This function makes an HTTP post request to the Cere DDC API, followed by a series of HTTP get requests (max 3) to obtain the upload status of your asset. The HTTP post request requires your wallet address, your wallet's public encryption key, a signed authentication message, and of course the asset along with it's associated title and description. Then function then returns a `CID` for the content you uploaded. 
+This function makes an HTTP post request to the Cere DDC API, followed by a series of HTTP get requests (max 3) to obtain the upload status of your asset. The HTTP post request requires your wallet address, your wallet's public encryption key, a signed authentication message, and of course the asset along with it's associated title and description. The function then returns a `CID` for the content you uploaded. 
 ```javascript
 export const upload2DDC = async (data, title, description) => {
   // Get the wallets that are connected to metamask
