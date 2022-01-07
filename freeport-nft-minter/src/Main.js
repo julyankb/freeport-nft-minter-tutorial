@@ -21,7 +21,8 @@ const Main = (props) => {
   const [status, setStatus] = useState("");
   const [uploadOutput, setUploadOutput] = useState("Content ID:");
   const [mintOutput, setMintOutput] = useState("NFT ID:");
-  const [attachOutput, setAttachOutput] = useState("Attachment transaction link:");
+  const [mintOutput2, setMintOutput2] = useState("Minting transaction link");
+  const [attachOutput, setAttachOutput] = useState("Attachment transaction link");
 
 
   function addWalletListener() {
@@ -72,6 +73,8 @@ const Main = (props) => {
     const { tx, nftId, status } = await mintNFT(+qty, metadata)
     setStatus(status);
     setMintOutput("NFT ID: " + nftId);
+    setMintOutput2("Minting tx:")
+    setMintOutput2(<a href={"https://mumbai.polygonscan.com/tx/"+tx}>Minting transaction hash: {tx}</a>)
   };
 
 
@@ -87,7 +90,7 @@ const Main = (props) => {
     setPreview(null);
     setUploadOutput("Content ID:")
     setMintOutput("NFT ID:")
-    setAttachOutput("Attachment transaction link:")
+    setAttachOutput("Attachment transaction link")
   };
 
   return (   
@@ -110,6 +113,7 @@ const Main = (props) => {
       <p id="output"> Downloaded image: </p>
       {downloadedImage ? <img src={downloadedImage} style={{width: "200px"}}></img>: null}
       <p id="output"> {mintOutput} </p>
+      <p id="output"> {mintOutput2} </p>
       <p id="output"> {attachOutput} </p>
       </div>
       <button id="actionButton" onClick={onClearOutputPressed}>Clear output</button>      
