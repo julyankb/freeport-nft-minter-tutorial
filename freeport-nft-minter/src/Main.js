@@ -87,10 +87,12 @@ const Main = (props) => {
   const onClearOutputPressed = async () => {
     setStatus("Follow the steps below.");
     setUploadData(null);
+    setDownloadedImage(null);
     setPreview(null);
     setUploadOutput("Content ID:")
     setMintOutput("NFT ID:")
-    setAttachOutput("Attachment transaction link")
+    setMintOutput2("Minting transaction hash")
+    setAttachOutput("Attachment transactions link")
   };
 
   return (   
