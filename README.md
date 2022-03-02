@@ -1,4 +1,7 @@
 # Minting NFTs on Polygon with Cere Freeport
+
+**Note**: Version 2 of this tutorial is underway and will include several usability improvements. Please stay tuned.
+
 In this tutorial, you'll learn how to connect a React frontend to Cere Freeport's smart contracts using Metamask and the Freeport SDK. You will learn how to:
 
 * Upload asset files (e.g., an image) to Cere's DDC.
